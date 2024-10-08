@@ -1,10 +1,8 @@
-﻿using PricingTierProcessor_POC.Models;
+﻿namespace PricingTierProcessor_POC.Interfaces;
+using PricingTierProcessor_POC.Models;
 
-namespace PricingTierProcessor_POC.Interfaces
+public interface IAccountingService
 {
-    public interface IAccountingService
-    {
-        Task HandleWorkOSEventAsync(WorkOSEvent workOSEvent);
-        Task UpdateAccountTierAsync(int accountId);
-    }
+    Task HandleWorkOSEventAsync(WorkOSEvent workOSEvent);
+    Task UpdateAccountTierAsync(int accountId);
 }
