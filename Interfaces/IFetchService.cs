@@ -5,6 +5,7 @@ namespace PricingTierProcessor_POC.Interfaces
 {
     public interface IFetchService
     {
+        Task<List<int>> FetchRestApiParticipantsAsync();
         Task<WorkOSList<Connection>> FetchWorkOSConnectionsAsync();
     }
 }

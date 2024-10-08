@@ -6,14 +6,14 @@ using PricingTierProcessor_POC.Services;
 using WorkOS;
 
 [ApiController]
-[Route("[controller]")]
-public class WorkOSApiController : ControllerBase
+[Route("api/[controller]")]
+public class ExternalAccountDetailsController : ControllerBase
 {
-    private  ILogger<WorkOSApiController> _logger;
+    private  ILogger<ExternalAccountDetailsController> _logger;
     private readonly  IAccountingService _accountingService;
     private readonly ICacheService _cacheService;
 
-    public WorkOSApiController(ILogger<WorkOSApiController> logger, ICacheService cacheService, IAccountingService accountingService)
+    public ExternalAccountDetailsController(ILogger<ExternalAccountDetailsController> logger, ICacheService cacheService, IAccountingService accountingService)
     {
         _logger = logger;
         _cacheService = cacheService;
@@ -44,12 +44,18 @@ public class WorkOSApiController : ControllerBase
         }
     }
 
-    [HttpGet(Name = "ListConnections")]
-    public async Task<WorkOSList<Connection>> FetchConnectionsFromWorkOSAsync()
+    [HttpGet("/query-workos")]
+    public async Task<WorkOSList<Connection>> QueryWorkOS()
     {
 
         return await _cacheService.GetWorkOSConnectionsAsync();
-    } 
+    }
+
+    [HttpGet("/query-identity-server")]
+    public async Task<dynamic> QueryIdentityServer()
+    {
+        return await _cacheService.GetRestApiParticipantsAsync();
+    }
 
 
 }

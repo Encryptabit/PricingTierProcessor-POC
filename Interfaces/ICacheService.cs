@@ -5,6 +5,7 @@ namespace PricingTierProcessor_POC.Interfaces
 {
     public interface ICacheService
     {
+        Task<List<int>> GetRestApiParticipantsAsync();
         Task<WorkOSList<Connection>> GetWorkOSConnectionsAsync();
     }
 }

@@ -24,7 +24,7 @@ public class CacheService : ICacheService
         if(!_cache.TryGetValue("SSOOrganizations", out WorkOSList<Connection> connections)) { 
             Interlocked.Increment(ref _cacheMisses);
 
-            // asynch fetch workos api
+            // async fetch workos api
             connections = await _fetchService.FetchWorkOSConnectionsAsync();
 
             _cache.Set<WorkOSList<Connection>>("SSOOrganizations", connections, TimeSpan.FromMinutes(60));
@@ -34,5 +34,23 @@ public class CacheService : ICacheService
         }
 
         return connections;
+    }
+
+    public async Task<List<int>> GetRestApiParticipantsAsync()
+    {
+        if (!_cache.TryGetValue("RestApiParticipants", out List<int> restApiParticipants))
+        {
+            Interlocked.Increment(ref _cacheMisses);
+
+            // Call IdentityServer 
+            restApiParticipants = await _fetchService.FetchRestApiParticipantsAsync();
+           
+            _cache.Set<List<int>>("RestApiParticipants", restApiParticipants, TimeSpan.FromMinutes(60));
+        } else
+        {
+            Interlocked.Increment(ref _cacheHits);
+        }
+
+        return restApiParticipants;
     }
 }
