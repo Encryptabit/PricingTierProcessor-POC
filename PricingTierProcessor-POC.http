@@ -1,0 +1,6 @@
+@PricingTierProcessor_POC_HostAddress = http://localhost:5262
+
+GET {{PricingTierProcessor_POC_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
