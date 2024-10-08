@@ -1,9 +1,10 @@
 ﻿using PricingTierProcessor_POC.Models;
+using WorkOS;
 
 namespace PricingTierProcessor_POC.Interfaces
 {
     public interface IFetchService
     {
-        Task<List<WorkOSConnection>> FetchSSOOrganizationsFromWorkOSAsync();
+        Task<WorkOSList<Connection>> FetchWorkOSConnectionsAsync();
     }
 }

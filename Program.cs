@@ -1,8 +1,10 @@
 using Microsoft.Extensions.Caching.Memory;
 using PricingTierProcessor_POC.Interfaces;
 using PricingTierProcessor_POC.Services;
+using WorkOS;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 
@@ -12,11 +14,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 
+// Application wide
+builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
+
 // My own
 builder.Services.AddScoped<ICacheService,CacheService>();
 builder.Services.AddScoped<IFetchService,FetchService>();
 builder.Services.AddScoped<IAccountingService, AccountingService>();
-builder.Services.AddScoped<IMemoryCache, MemoryCache>();
+builder.Services.AddScoped<SSOService>();
 
 var app = builder.Build();
 

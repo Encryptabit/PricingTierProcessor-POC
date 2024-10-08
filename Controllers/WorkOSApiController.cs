@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PricingTierProcessor_POC.Interfaces;
 using PricingTierProcessor_POC.Models;
 using PricingTierProcessor_POC.Services;
+using WorkOS;
 
 [ApiController]
 [Route("[controller]")]
@@ -44,7 +45,7 @@ public class WorkOSApiController : ControllerBase
     }
 
     [HttpGet(Name = "ListConnections")]
-    public async Task<List<WorkOSConnection>> FetchConnectionsFromWorkOSAsync()
+    public async Task<WorkOSList<Connection>> FetchConnectionsFromWorkOSAsync()
     {
 
         return await _cacheService.GetWorkOSConnectionsAsync();

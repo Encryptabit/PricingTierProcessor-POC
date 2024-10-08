@@ -1,9 +1,10 @@
 ﻿using PricingTierProcessor_POC.Models;
+using WorkOS;
 
 namespace PricingTierProcessor_POC.Interfaces
 {
     public interface ICacheService
     {
-        Task<List<WorkOSConnection>> GetWorkOSConnectionsAsync();
+        Task<WorkOSList<Connection>> GetWorkOSConnectionsAsync();
     }
 }

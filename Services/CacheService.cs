@@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
 using PricingTierProcessor_POC.Interfaces;
 using PricingTierProcessor_POC.Models;
 using System.Threading.Tasks;
+using WorkOS;
 
 public class CacheService : ICacheService
 {
@@ -18,8 +19,20 @@ public class CacheService : ICacheService
         _fetchService = fetchService;
     }
 
-    public async Task<List<WorkOSConnection>> GetWorkOSConnectionsAsync()
+    public async Task<WorkOSList<Connection>> GetWorkOSConnectionsAsync()
     {
-        return await _fetchService.FetchSSOOrganizationsFromWorkOSAsync();
+        if(!_cache.TryGetValue("SSOOrganizations", out WorkOSList<Connection> connections)) { 
+            Interlocked.Increment(ref _cacheMisses);
+
+            // asynch fetch workos api
+            connections = await _fetchService.FetchWorkOSConnectionsAsync();
+
+            _cache.Set<WorkOSList<Connection>>("SSOOrganizations", connections, TimeSpan.FromMinutes(60));
+        } else
+        {
+            Interlocked.Increment(ref _cacheHits);
+        }
+
+        return connections;
     }
 }
